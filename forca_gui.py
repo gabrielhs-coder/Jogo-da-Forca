@@ -40,3 +40,19 @@ def atualizar_display(palavra, letras_tentadas):
 def verificar_vitoria(palavra, letras_tentadas):
     """Verifica se todas as letras da palavra já foram descobertas."""
     return all(letra in letras_tentadas for letra in palavra)
+def carregar_estatisticas(arquivo="estatisticas.txt"):
+    """Lê vitórias e derrotas salvas anteriormente."""
+    if not os.path.exists(arquivo):
+        return 0, 0
+    try:
+        with open(arquivo, "r", encoding="utf-8") as f:
+            v, d = f.read().strip().split(",")
+            return int(v), int(d)
+    except (ValueError, IndexError):
+        return 0, 0
+
+
+def salvar_estatisticas(vitorias, derrotas, arquivo="estatisticas.txt"):
+    """Salva o placar acumulado de vitórias e derrotas em arquivo."""
+    with open(arquivo, "w", encoding="utf-8") as f:
+        f.write(f"{vitorias},{derrotas}")
